@@ -6,6 +6,7 @@
       _Scale2("Scale 2", Range(0.1,10)) = 2
       _Scale3("Scale 3", Range(0.1,10)) = 2
       _Scale4("Scale 4", Range(0.1,10)) = 2
+	  _BumpMap("Bumpmap", 2D) = "bump" {}
     }
     SubShader {
       
@@ -15,6 +16,7 @@
       struct Input {
           float2 uv_MainTex;
           float3 worldPos;
+		  float2 uv_BumpMap;
       };
       
       float4 _Tint;
@@ -23,6 +25,8 @@
       float _Scale2;
       float _Scale3;
       float _Scale4;
+	  
+	  sampler2D _BumpMap;
 
       void surf (Input IN, inout SurfaceOutput o) {
           const float PI = 3.14159265;
@@ -46,6 +50,7 @@
           o.Albedo.g = sin(c/8.0*PI + 2*PI/4);
           o.Albedo.b = sin(c/3.5*PI + 4*PI/4);
           o.Albedo *= _Tint;
+		  o.Normal = UnpackNormal(tex2D(_BumpMap, IN.uv_BumpMap));
       }
       ENDCG
     } 
