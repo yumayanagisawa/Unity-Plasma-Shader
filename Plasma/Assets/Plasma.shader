@@ -12,6 +12,7 @@
       
       CGPROGRAM
       #pragma surface surf Lambert
+	  #pragma target 3.0
       
       struct Input {
           float2 uv_MainTex;
